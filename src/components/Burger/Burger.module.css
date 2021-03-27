@@ -26,3 +26,19 @@
     height: 300px;
   }
 }
+
+/* scroll bar */
+::-webkit-scrollbar {
+  background: rgb(199, 199, 199);
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 2px 5px rgb(48, 48, 48);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(10, 122, 235);
+  border-radius: 10px;
+}
