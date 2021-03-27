@@ -8,4 +8,5 @@
   box-shadow: 0 2px 1px #ccc;
   margin: auto;
   padding: 5px 0;
+  user-select: none;
 }
