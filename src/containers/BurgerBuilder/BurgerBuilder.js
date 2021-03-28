@@ -13,10 +13,6 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.state={...}
-  //   }
   state = {
     ingredients: { salad: 0, bacon: 0, cheese: 0, meat: 0 },
     totalPrice: 4,
@@ -38,13 +34,17 @@ class BurgerBuilder extends Component {
     const newPrice = oldPrice + opp * priceChange;
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
   };
+  //purchaseHandler() { wont work because this will refer to event which called that function. So use arrow fnctions as abov
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  };
 
   render() {
     const disabledInfo = { ...this.state.ingredients };
     for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] <= 0;
     return (
       <Aux>
-        <Modal>
+        <Modal show={this.state.purchasing}>
           <OrderSummary
             ingredients={this.state.ingredients}
             price={this.state.totalPrice}
@@ -52,6 +52,7 @@ class BurgerBuilder extends Component {
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
+          ordered={this.purchaseHandler}
           ingredientChanged={this.ingredientChangeHandler}
           disabled={disabledInfo}
           price={this.state.totalPrice}

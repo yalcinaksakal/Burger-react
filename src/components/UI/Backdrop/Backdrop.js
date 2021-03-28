@@ -1,0 +1,7 @@
+import React from "react";
+import styles from "./BackDrop.module.css";
+
+const backDrop = props =>
+  props.show ? <div className={styles.BackDrop}></div> : null;
+
+export default backDrop;
