@@ -14,14 +14,13 @@ const buildControls = props => (
     </p>
     {controls.map(ctrl => (
       <BuildControl
-        added={() => props.ingredientAdded(ctrl.type)}
-        removed={() => props.ingredientRemoved(ctrl.type)}
+        changed={opperation => props.ingredientChanged(ctrl.type, opperation)}
         key={ctrl.label}
         label={ctrl.label}
         disabled={props.disabled[ctrl.type]}
       />
     ))}
-    <button className={styles.OrderButton} disabled={props.price <= 4.05}>
+    <button className={styles.OrderButton} disabled={props.price <= 4}>
       Order Now
     </button>
   </div>
