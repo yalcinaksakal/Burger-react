@@ -5,8 +5,8 @@ import styles from "./Burger.module.css";
 
 const burger = props => {
   const transformedIngredients = [];
-  Object.keys(props.ingredients).map(igKey =>
-    [...Array(props.ingredients[igKey])].map((_, i) =>
+  Object.keys(props.ingredients).forEach(igKey =>
+    [...Array(props.ingredients[igKey])].forEach((_, i) =>
       transformedIngredients.push(
         <BurgerIngredient key={igKey + i} type={igKey} />
       )
