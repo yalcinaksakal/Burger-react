@@ -1,0 +1,42 @@
+.NavItem {
+  margin: 10px 0;
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+}
+
+.NavItem a {
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: block;
+  padding: 5px;
+}
+
+.NavItem a:hover,
+.NavItem.active a {
+  color: white;
+}
+
+.NavItem:hover,
+.NavItem:active,
+.NavItem.active {
+  background-color: #585fec;
+  border-bottom: 4px solid #1b1b6e;
+}
+
+@media (min-width: 500px) {
+  .NavItem {
+    margin: 0 2px;
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .NavItem a {
+    color: white;
+  }
+}
