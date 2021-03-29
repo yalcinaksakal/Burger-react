@@ -37,7 +37,7 @@ class BurgerIngredient extends Component {
   }
 }
 
-//PropTypes is an object holdin pro types from prop-types.
+//PropTypes is an object holding prop types from prop-types.
 //.propTypes is a method extended from Component class
 BurgerIngredient.propTypes = {
   type: PropTypes.string.isRequired,
