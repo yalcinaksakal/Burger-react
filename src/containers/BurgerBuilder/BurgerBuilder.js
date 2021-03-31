@@ -52,18 +52,14 @@ class BurgerBuilder extends Component {
     const oldCount = this.state.ingredients[type];
     if (!oldCount && opperation === "remove") return;
     const opp = opperation === "add" ? 1 : -1;
-    const updatedCount = oldCount + opp;
     //unmutate state
     const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-
+    updatedIngredients[type] = oldCount + opp;
     //price
-    const priceChange = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice + opp * priceChange;
+    const newPrice = this.state.totalPrice + opp * INGREDIENT_PRICES[type];
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
   };
-  //purchaseHandler() { wont work because this will refer to event which called that function. So use arrow fnctions as abov
+  //purchaseHandler() { wont work because this will refer to event which called that function. So use arrow fnctions as above
   purchaseHandler = () => {
     this.setState({ purchasing: true });
   };
