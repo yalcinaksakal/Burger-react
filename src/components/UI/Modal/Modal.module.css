@@ -3,9 +3,10 @@
   z-index: 500;
   background-color: whitesmoke;
   width: 80%;
+  min-height: 35px;
   border-radius: 10px;
   box-shadow: 1px 1px 1px rgb(184, 184, 184);
-  padding: 0 16px;
+  padding: 5px 16px;
   left: 10%;
   top: 30%;
   box-sizing: border-box;
