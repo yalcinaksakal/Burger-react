@@ -9,16 +9,18 @@ import Button from "../../UI/Button/Button";
 const checkoutSummary = props => {
   return (
     <div className={styles.CheckoutSummary}>
-      <h1>We hope it tastes well.</h1>
-      <div >
-        <Burger ingredients={props.ingredients} />
-      </div>
+      <p>
+        {props.text} <br />
+        We hope it tastes well. <br />
+        <strong>{props.price}</strong>
+      </p>
       <Button clicked={props.checkoutCancelled} btnType="Danger">
         Cancel
       </Button>
       <Button clicked={props.checkoutContinued} btnType="Success">
         Continue
       </Button>
+      <Burger ingredients={props.ingredients} />
     </div>
   );
 };
