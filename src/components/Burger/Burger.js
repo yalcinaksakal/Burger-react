@@ -1,9 +1,11 @@
 import React from "react";
-
+// import { withRouter } from "react-router-dom";
+// withRouter, Route props will be added from nearest matched case
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 import styles from "./Burger.module.css";
 
 const burger = props => {
+  
   const transformedIngredients = [];
   Object.keys(props.ingredients).forEach(igKey =>
     [...Array(props.ingredients[igKey])].forEach((_, i) =>
@@ -25,5 +27,5 @@ const burger = props => {
     </div>
   );
 };
-
 export default burger;
+// export default withRouter(burger);

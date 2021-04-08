@@ -11,7 +11,8 @@
 }
 .BuildControls p {
   padding: 0;
-  margin: 0;
+  margin: 5px 0;
+  font-size: 25px;
 }
 
 .OrderButton {
