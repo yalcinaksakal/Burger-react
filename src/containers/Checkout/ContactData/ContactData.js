@@ -39,7 +39,8 @@ class ContactData extends Component {
         if (!response.ok)
           throw new Error(response.status + " " + response.statusText);
         this.setState({ loading: false, error: "success" });
-        setTimeout(() => this.props.history.push("/"), 2000);
+        this.props.hideCancel();
+        setTimeout(() => this.props.history.push("/"), 3000);
       })
       .catch(error => {
         error.message = "While uploading order - " + error.message;
@@ -48,53 +49,62 @@ class ContactData extends Component {
   };
   render() {
     let form = (
-      <form>
-        <input
-          className={styles.Input}
-          type="text"
-          name="name"
-          placeholder="Your name"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="email"
-          placeholder="Your email"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="street"
-          placeholder="Street"
-        />
-        <input
-          className={styles.Input}
-          type="text"
-          name="postal"
-          placeholder="Postal Code"
-        />
-
-        <Button btnType="Success" clicked={this.orderHandler}>
-          ORDER
-        </Button>
-      </form>
-    );
-    if (this.state.loading) form = <Spinner />;
-    if (this.state.error)
-      form =
-        this.state.error === "success" ? (
-          <p style={{ background: "#40d828", color: "white", padding: "10px" }}>
-            Order is successfully recieved.
-          </p>
-        ) : (
-          <p> {`❌ Something went wrong. (${this.state.error})`}</p>
-        );
-    return (
       <div className={styles.ContactData}>
         <h4>Enter your Contact Data</h4>
-        {form}
+        <form>
+          <input
+            className={styles.Input}
+            type="text"
+            name="name"
+            placeholder="Your name"
+          />
+          <input
+            className={styles.Input}
+            type="text"
+            name="email"
+            placeholder="Your email"
+          />
+          <input
+            className={styles.Input}
+            type="text"
+            name="street"
+            placeholder="Street"
+          />
+          <input
+            className={styles.Input}
+            type="text"
+            name="postal"
+            placeholder="Postal Code"
+          />
+
+          <Button btnType="Success" clicked={this.orderHandler}>
+            ORDER
+          </Button>
+        </form>
       </div>
     );
+    if (this.state.loading)
+      form = (
+        <div className={styles.ContactData}>
+          <Spinner />
+        </div>
+      );
+    if (this.state.error)
+      form = (
+        <p
+          className={styles.ContactData}
+          style={{
+            background: "#40d828",
+            color: "white",
+          }}
+        >
+          {this.state.error === "success"
+            ? "Order is successfully recieved."
+            : `❌ Something went wrong. (${this.state.error})`}
+        </p>
+      );
+
+    return form;
   }
 }
 

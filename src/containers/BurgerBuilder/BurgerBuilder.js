@@ -33,7 +33,7 @@ class BurgerBuilder extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props);
+   
     try {
       const response = await fetch(baseURL + "ingredients.json");
 

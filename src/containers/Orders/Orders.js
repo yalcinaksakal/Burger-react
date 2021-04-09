@@ -5,34 +5,51 @@ const baseURL = "https://burger-react-d5fe4-default-rtdb.firebaseio.com/";
 
 class Orders extends Component {
   state = {
-    orders: [],
+    orders: {},
     loading: true,
     error: false,
   };
-  async componentDidMount() {
+
+  async getOrders() {
     try {
       const response = await fetch(baseURL + "orders.json");
 
       if (!response.ok) throw new Error("Could not get response from server.");
-      const data = await response.json();
-      const fetchedOrders = [];
-      for (let key in data) fetchedOrders.push({ ...data[key], id: key });
-
-      this.setState({ loading: false, orders: fetchedOrders });
+      let data = await response.json();
+      if (!data) throw new Error("You haven't ordered a burger yet.");
+      this.setState({ loading: false, orders: data });
     } catch (error) {
-      this.setState({ loading: false, error: error });
+      this.setState({ loading: false, error: error.message });
     }
   }
 
+  componentDidMount() {
+    this.getOrders();
+  }
+
+  deleteOrderHandler = id => {
+    fetch(baseURL + "orders/" + id + ".json", {
+      method: "DELETE",
+    })
+      .then(response => {
+        if (!response.ok)
+          throw new Error(response.status + " " + response.statusText);
+        this.getOrders();
+      })
+      .catch(error => {
+        this.setState({ error: error.message });
+      });
+  };
   render() {
     let orders = (
       <div>
-        {this.state.orders.map(order => (
+        {Object.keys(this.state.orders).map(order => (
           <Order
-            ingredients={order.ingredients}
-            key={order.id}
-            id={order.id}
-            price={order.price}
+            ingredients={this.state.orders[order].ingredients}
+            key={order}
+            id={order}
+            price={this.state.orders[order].price}
+            deleter={this.deleteOrderHandler}
           />
         ))}
       </div>
@@ -43,6 +60,20 @@ class Orders extends Component {
           style={{ width: "100%", height: "100px", background: "whitesmoke" }}
         >
           <Spinner />
+        </div>
+      );
+    if (this.state.error)
+      orders = (
+        <div
+          style={{
+            width: "100%",
+            height: "100px",
+            background: "whitesmoke",
+            padding: "20px",
+          }}
+        >
+          {" "}
+          {`❌ (${this.state.error})`}
         </div>
       );
     return orders;
