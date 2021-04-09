@@ -33,7 +33,6 @@ class BurgerBuilder extends Component {
   }
 
   async componentDidMount() {
-   
     try {
       const response = await fetch(baseURL + "ingredients.json");
 
@@ -63,6 +62,7 @@ class BurgerBuilder extends Component {
   //purchaseHandler() { wont work because this will refer to event which called that function. So use arrow fnctions as above
   purchaseHandler = () => {
     this.setState({ purchasing: true });
+    this.purchaseContinueHandler();
   };
 
   purchaseCancelHandler = () => {
@@ -125,12 +125,12 @@ class BurgerBuilder extends Component {
     if (this.state.loading) orderSummary = <Spinner />;
     return (
       <Aux>
-        <Modal
+        {/* <Modal
           show={this.state.purchasing}
           modalClosed={this.purchaseCancelHandler}
         >
           {orderSummary}
-        </Modal>
+        </Modal> */}
         <Modal show={this.state.error} modalClosed={this.purchaseCancelHandler}>
           {`❌ Something went wrong. (${this.state.error})`}
         </Modal>
