@@ -1,42 +1,36 @@
 .NavItem {
-  margin: 10px 0;
+  margin: 5px;
   box-sizing: border-box;
   width: 100%;
-  display: block;
   border-radius: 5px;
 }
 
 .NavItem a {
-  color: black;
+  height: 40px;
+  color: white;
   text-decoration: none;
   border-radius: 5px;
   box-sizing: border-box;
-  display: block;
-  padding: 5px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 4px solid rgba(255, 255, 255, 0);
+  transition: all ease 0.3s;
 }
 
 .NavItem a:hover,
-.NavItem.active a {
-  color: white;
-}
-
-.NavItem:hover,
-.NavItem:active,
-.NavItem.active {
+.NavItem a:active,
+.NavItem a.active {
   background-color: #585fec;
   border-bottom: 4px solid #1b1b6e;
 }
 
 @media (min-width: 500px) {
   .NavItem {
-    margin: 0 2px;
     height: 100%;
     width: auto;
-    display: flex;
-    align-items: center;
   }
-
   .NavItem a {
-    color: white;
+    height: 100%;
   }
 }

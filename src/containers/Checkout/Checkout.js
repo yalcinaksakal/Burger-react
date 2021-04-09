@@ -9,7 +9,9 @@ import { Route } from "react-router-dom";
 class Checkout extends Component {
   state = {
     ingredients: {},
+    price: 0,
   };
+
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
@@ -23,7 +25,7 @@ class Checkout extends Component {
         orderText += param[1] + " " + param[0];
       } else {
         orderText += ". ";
-        price = "Price is " + param[1] + " USD.";
+        price = param[1];
       }
     }
     orderText = "Burger with " + orderText;
@@ -34,6 +36,9 @@ class Checkout extends Component {
     this.props.history.goBack();
   };
   checkoutContinuedHandler = () => {
+    // this.props.history.push({
+    //     pathname: "/checkout/contact-data"
+    //   });
     this.props.history.replace("/checkout/contact-data");
   };
   render() {
@@ -41,11 +46,18 @@ class Checkout extends Component {
       <div>
         <Route
           path={this.props.match.path + "/contact-data"}
-          component={ContactData}
+          render={props => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              price={this.state.price}
+              {...props}
+            />
+          )}
+          //   component={ContactData}
         />
         <CheckoutSummary
           text={this.state.text}
-          price={this.state.price}
+          price={"Price is " + this.state.price + " USD."}
           ingredients={this.state.ingredients}
           checkoutCancelled={this.checkoutCancelledHandler}
           checkoutContinued={this.checkoutContinuedHandler}

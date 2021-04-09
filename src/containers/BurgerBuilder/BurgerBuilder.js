@@ -69,34 +69,6 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false, error: null });
   };
   purchaseContinueHandler = () => {
-    // this.setState({ loading: true });
-    // //in a real app price sort of important data should be calculated on server side, so that user cant manupulate them
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: "YA",
-    //     adress: { street: "adress", zipCode: "1234", country: "Germany" },
-    //     email: "test@test.com",
-    //   },
-    //   deliveryMethod: "fastest",
-    // };
-    // fetch(baseURL + "/orders.json", {
-    //   method: "POST",
-    //   body: JSON.stringify(order),
-    // })
-    //   .then(response => {
-    //     if (!response.ok)
-    //       throw new Error(response.status + " " + response.statusText);
-    //     this.setState({
-    //       loading: false,
-    //       purchasing: false,
-    //     });
-    //   })
-    //   .catch(error => {
-    //     error.message = "While uploading order - " + error.message;
-    //     this.setState({ loading: false, purchasing: false, error: error });
-    //   });
     const queryParams = [];
     for (let i in this.state.ingredients) {
       queryParams.push(
@@ -105,13 +77,9 @@ class BurgerBuilder extends Component {
           encodeURIComponent(this.state.ingredients[i])
       );
     }
-   
-    queryParams.push(
-      encodeURIComponent("price") +
-        "=" +
-        encodeURIComponent(this.state.totalPrice.toFixed(2))
-    );
-    console.log(queryParams);
+
+    queryParams.push("price=" + this.state.totalPrice.toFixed(2));
+
     const queryString = queryParams.join("&");
     this.props.history.push({
       pathname: "/checkout",
