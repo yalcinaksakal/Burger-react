@@ -30,3 +30,7 @@
 .Danger {
   background: #f34040;
 }
+.Button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

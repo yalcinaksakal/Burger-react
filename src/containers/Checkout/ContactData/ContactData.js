@@ -18,6 +18,11 @@ class ContactData extends Component {
           placeholder: "Your Name",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       email: {
         elementType: "input",
@@ -26,6 +31,11 @@ class ContactData extends Component {
           placeholder: "Your E-mail",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       street: {
         elementType: "input",
@@ -34,6 +44,11 @@ class ContactData extends Component {
           placeholder: "Street",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       zipCode: {
         elementType: "input",
@@ -42,6 +57,13 @@ class ContactData extends Component {
           placeholder: "ZIP Code",
         },
         value: "",
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5,
+        },
+        valid: false,
+        touched: false,
       },
       country: {
         elementType: "input",
@@ -50,6 +72,11 @@ class ContactData extends Component {
           placeholder: "Country",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -59,18 +86,48 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" },
           ],
         },
-        value: "",
+        value: "fastest",
       },
     },
     loading: false,
+    formIsValid: false,
   };
+
+  checkValidity(value, rules) {
+    value = value.trim();
+    let isValid = true;
+
+    if (rules.required) isValid = value !== "" && isValid;
+
+    if (rules.minLength) isValid = value.length >= rules.minLength && isValid;
+
+    if (rules.maxLength) isValid = value.length <= rules.maxLength && isValid;
+
+    return isValid;
+  }
 
   inputChangedHandler = (e, inputId) => {
     const updatedOrderForm = { ...this.state.orderForm };
     const updatedFormelement = { ...updatedOrderForm[inputId] };
     updatedFormelement.value = e.target.value;
+    if (updatedFormelement.validation)
+      updatedFormelement.valid = this.checkValidity(
+        updatedFormelement.value,
+        updatedFormelement.validation
+      );
+    updatedFormelement.touched = true;
     updatedOrderForm[inputId] = updatedFormelement;
-    this.setState({ orderForm: updatedOrderForm });
+
+    let formIsValid = true;
+    for (let formEl in this.state.orderForm)
+      if (
+        updatedOrderForm[formEl].validation &&
+        !updatedOrderForm[formEl].valid
+      ) {
+        formIsValid = false;
+        break;
+      }
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
   orderHandler = e => {
@@ -80,13 +137,14 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: "YA",
-        adress: { street: "adress", zipCode: "1234", country: "Germany" },
-        email: "test@test.com",
-      },
-      deliveryMethod: "fastest",
+      orderData: {},
     };
+
+    const orderData = {};
+    for (let formEl in this.state.orderForm)
+      orderData[formEl] = this.state.orderForm[formEl].value;
+    order.orderData = orderData;
+
     fetch(baseURL + "/orders.json", {
       method: "POST",
       body: JSON.stringify(order),
@@ -107,19 +165,23 @@ class ContactData extends Component {
     let form = (
       <div className={styles.ContactData}>
         <h4>Enter your Contact Data</h4>
-        <form>
+        <form onSubmit={this.orderHandler}>
           {Object.keys(this.state.orderForm).map(formElement => (
             <Input
               key={formElement}
+              label={formElement}
               focus={formElement === "name"}
               elementType={this.state.orderForm[formElement].elementType}
               elementConfig={this.state.orderForm[formElement].elementConfig}
               value={this.state.orderForm[formElement].value}
               changed={e => this.inputChangedHandler(e, formElement)}
+              invalid={!this.state.orderForm[formElement].valid}
+              shouldValidate={this.state.orderForm[formElement].validation}
+              touched={this.state.orderForm[formElement].touched}
             />
           ))}
 
-          <Button btnType="Success" clicked={this.orderHandler}>
+          <Button btnType="Success" disabled={!this.state.formIsValid}>
             ORDER
           </Button>
         </form>

@@ -3,12 +3,17 @@ import styles from "./Input.module.css";
 import React from "react";
 const input = props => {
   let inputEl = null;
-
+  const inputClasses = [styles.InputEl];
+  if (props.invalid && props.shouldValidate && props.touched)
+    inputClasses.push(styles.Invalid);
+  let label = props.label;
+  if (label === "deliveryMethod") label = "Delivery";
+  if (label === "zipCode") label = "Zip Code";
   switch (props.elementType) {
     case "input":
       inputEl = (
         <input
-          className={styles.InputEl}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           autoFocus={props.focus}
@@ -19,7 +24,7 @@ const input = props => {
     case "textarea":
       inputEl = (
         <textarea
-          className={styles.InputEl}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -29,7 +34,7 @@ const input = props => {
     case "select":
       inputEl = (
         <select
-          className={styles.InputEl}
+          className={inputClasses.join(" ")}
           value={props.value}
           onChange={props.changed}
         >
@@ -44,7 +49,7 @@ const input = props => {
     default:
       inputEl = (
         <input
-          className={styles.InputEl}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -53,7 +58,7 @@ const input = props => {
   }
   return (
     <div className={styles.Input}>
-      <label className={styles.Label}>{props.label}</label>
+      <label className={styles.Label}>{label}</label>
       {inputEl}
     </div>
   );
