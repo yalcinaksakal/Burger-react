@@ -70,10 +70,11 @@ class Orders extends Component {
             height: "100px",
             background: "whitesmoke",
             padding: "20px",
+            textAlign: "center",
           }}
         >
           {" "}
-          {`❌ (${this.state.error})`}
+          {`❌ ${this.state.error}`}
         </div>
       );
     return orders;

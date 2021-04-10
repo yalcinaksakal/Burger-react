@@ -5,20 +5,28 @@
   outline: none;
   cursor: pointer;
   font: inherit;
-  padding: 10px;
-  margin: 0;
+  padding: 5px;
+  margin-top: 10px;
+  margin-right: 20px;
   font-weight: bold;
+  border-radius: 7px;
+  transition: all ease 0.3s;
 }
-
+/* 
 .Button:first-of-type {
   margin-left: 0;
   padding-left: 0;
+} */
+
+.Button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
 }
 
 .Success {
-  color: #40d828;
+  background: #40d828;
 }
 
 .Danger {
-  color: #f34040;
+  background: #f34040;
 }

@@ -3,7 +3,7 @@ import Aux from "../../hoc/Auxilary/Auxilary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+// import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
 // import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 const baseURL = "https://burger-react-d5fe4-default-rtdb.firebaseio.com/";
@@ -89,7 +89,7 @@ class BurgerBuilder extends Component {
   render() {
     const disabledInfo = { ...this.state.ingredients };
     for (let key in disabledInfo) disabledInfo[key] = disabledInfo[key] <= 0;
-    let orderSummary = null;
+    // let orderSummary = null;
     let burger = (
       <div
         style={{
@@ -113,16 +113,16 @@ class BurgerBuilder extends Component {
           <Burger ingredients={this.state.ingredients} />
         </Aux>
       );
-      orderSummary = (
-        <OrderSummary
-          ingredients={this.state.ingredients}
-          price={this.state.totalPrice}
-          purchaseCanceled={this.purchaseCancelHandler}
-          purchaseContinue={this.purchaseContinueHandler}
-        />
-      );
+      // orderSummary = (
+      //   <OrderSummary
+      //     ingredients={this.state.ingredients}
+      //     price={this.state.totalPrice}
+      //     purchaseCanceled={this.purchaseCancelHandler}
+      //     purchaseContinue={this.purchaseContinueHandler}
+      //   />
+      // );
     }
-    if (this.state.loading) orderSummary = <Spinner />;
+    // if (this.state.loading) orderSummary = <Spinner />;
     return (
       <Aux>
         {/* <Modal
