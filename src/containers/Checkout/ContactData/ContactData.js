@@ -4,17 +4,73 @@ import styles from "./ContactData.module.css";
 
 import Spinner from "../../../components/UI/Spinner/Spinner";
 
+import Input from "../../../components/UI/Input/Input";
+
 const baseURL = "https://burger-react-d5fe4-default-rtdb.firebaseio.com/";
 
 class ContactData extends Component {
   state = {
-    name: "",
-    email: "",
-    address: {
-      street: "",
-      postalCode: "",
+    orderForm: {
+      name: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Your Name",
+        },
+        value: "",
+      },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Your E-mail",
+        },
+        value: "",
+      },
+      street: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Street",
+        },
+        value: "",
+      },
+      zipCode: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "ZIP Code",
+        },
+        value: "",
+      },
+      country: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Country",
+        },
+        value: "",
+      },
+      deliveryMethod: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "fastest", displayValue: "Fastest" },
+            { value: "cheapest", displayValue: "Cheapest" },
+          ],
+        },
+        value: "",
+      },
     },
     loading: false,
+  };
+
+  inputChangedHandler = (e, inputId) => {
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormelement = { ...updatedOrderForm[inputId] };
+    updatedFormelement.value = e.target.value;
+    updatedOrderForm[inputId] = updatedFormelement;
+    this.setState({ orderForm: updatedOrderForm });
   };
 
   orderHandler = e => {
@@ -52,30 +108,16 @@ class ContactData extends Component {
       <div className={styles.ContactData}>
         <h4>Enter your Contact Data</h4>
         <form>
-          <input
-            className={styles.Input}
-            type="text"
-            name="name"
-            placeholder="Your name"
-          />
-          <input
-            className={styles.Input}
-            type="text"
-            name="email"
-            placeholder="Your email"
-          />
-          <input
-            className={styles.Input}
-            type="text"
-            name="street"
-            placeholder="Street"
-          />
-          <input
-            className={styles.Input}
-            type="text"
-            name="postal"
-            placeholder="Postal Code"
-          />
+          {Object.keys(this.state.orderForm).map(formElement => (
+            <Input
+              key={formElement}
+              focus={formElement === "name"}
+              elementType={this.state.orderForm[formElement].elementType}
+              elementConfig={this.state.orderForm[formElement].elementConfig}
+              value={this.state.orderForm[formElement].value}
+              changed={e => this.inputChangedHandler(e, formElement)}
+            />
+          ))}
 
           <Button btnType="Success" clicked={this.orderHandler}>
             ORDER
