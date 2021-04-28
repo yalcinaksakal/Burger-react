@@ -20,6 +20,7 @@ class ContactData extends Component {
         value: "",
         validation: {
           required: true,
+          minLength: 3,
         },
         valid: false,
         touched: false,
@@ -33,6 +34,7 @@ class ContactData extends Component {
         value: "",
         validation: {
           required: true,
+          regexp: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         },
         valid: false,
         touched: false,
@@ -59,8 +61,8 @@ class ContactData extends Component {
         value: "",
         validation: {
           required: true,
-          minLength: 5,
           maxLength: 5,
+          regexp: /(^\d{5}$)|(^\d{5}-\d{4}$)/,
         },
         valid: false,
         touched: false,
@@ -74,6 +76,7 @@ class ContactData extends Component {
         value: "",
         validation: {
           required: true,
+          minLength: 3,
         },
         valid: false,
         touched: false,
@@ -102,6 +105,9 @@ class ContactData extends Component {
     if (rules.minLength) isValid = value.length >= rules.minLength && isValid;
 
     if (rules.maxLength) isValid = value.length <= rules.maxLength && isValid;
+
+    if (rules.regexp)
+      isValid = rules.regexp.test(value.toLowerCase()) && isValid;
 
     return isValid;
   }
